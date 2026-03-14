@@ -1,105 +1,29 @@
-import { useEffect, useState, useRef } from "react"
-import { useKakao, useNaver } from "../store"
+import { useKakao } from "../store"
+import mapImage from "../../images/map.png"
 import nmapIcon from "../../icons/nmap-icon.png"
 import knaviIcon from "../../icons/knavi-icon.png"
 import tmapIcon from "../../icons/tmap-icon.png"
-import LockIcon from "../../icons/lock-icon.svg?react"
-import UnlockIcon from "../../icons/unlock-icon.svg?react"
 import {
   KMAP_PLACE_ID,
   LOCATION,
   NMAP_PLACE_ID,
   WEDDING_HALL_POSITION,
 } from "../../const"
-import { NAVER_MAP_CLIENT_ID } from "../../env"
 
-export const Map = () => {
-  return NAVER_MAP_CLIENT_ID ? <NaverMap /> : <div>Map is not available</div>
+const checkDevice = () => {
+  const userAgent = window.navigator.userAgent
+  if (userAgent.match(/(iPhone|iPod|iPad)/)) return "ios"
+  if (userAgent.match(/(Android)/)) return "android"
+  return "other"
 }
 
-const NaverMap = () => {
-  const naver = useNaver()
+export const Map = () => {
   const kakao = useKakao()
-  const ref = useRef<HTMLDivElement>(null)
-  const [locked, setLocked] = useState(true)
-  const [showLockMessage, setShowLockMessage] = useState(false)
-  const lockMessageTimeout = useRef<number | null>(null)
-
-  const checkDevice = () => {
-    const userAgent = window.navigator.userAgent
-    if (userAgent.match(/(iPhone|iPod|iPad)/)) {
-      return "ios"
-    } else if (userAgent.match(/(Android)/)) {
-      return "android"
-    } else {
-      return "other"
-    }
-  }
-
-  useEffect(() => {
-    if (naver) {
-      const map = new naver.maps.Map(ref.current, {
-        center: WEDDING_HALL_POSITION,
-        zoom: 17,
-      })
-
-      new naver.maps.Marker({ position: WEDDING_HALL_POSITION, map })
-
-      return () => {
-        map.destroy()
-      }
-    }
-  }, [naver])
 
   return (
     <>
       <div className="map-wrapper">
-        {locked && (
-          <div
-            className="lock"
-            onTouchStart={() => {
-              setShowLockMessage(true)
-              if (lockMessageTimeout.current !== null) {
-                clearTimeout(lockMessageTimeout.current)
-              }
-              lockMessageTimeout.current = setTimeout(
-                () => setShowLockMessage(false),
-                3000,
-              )
-            }}
-            onMouseDown={() => {
-              setShowLockMessage(true)
-              if (lockMessageTimeout.current !== null) {
-                clearTimeout(lockMessageTimeout.current)
-              }
-              lockMessageTimeout.current = setTimeout(
-                () => setShowLockMessage(false),
-                3000,
-              )
-            }}
-          >
-            {showLockMessage && (
-              <div className="lock-message">
-                <LockIcon /> 자물쇠 버튼을 눌러
-                <br />
-                터치 잠금 해제 후 확대 및 이동해 주세요.
-              </div>
-            )}
-          </div>
-        )}
-        <button
-          className={"lock-button" + (locked ? "" : " unlocked")}
-          onClick={() => {
-            if (lockMessageTimeout.current !== null) {
-              clearTimeout(lockMessageTimeout.current)
-            }
-            setShowLockMessage(false)
-            setLocked((locked) => !locked)
-          }}
-        >
-          {locked ? <LockIcon /> : <UnlockIcon />}
-        </button>
-        <div className="map-inner" ref={ref}></div>
+        <img src={mapImage} alt="위치 지도" className="map-image" />
       </div>
       <div className="navigation">
         <button

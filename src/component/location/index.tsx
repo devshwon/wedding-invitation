@@ -12,12 +12,14 @@ export const Location = () => {
         <div className="addr">
           {LOCATION}
           <div className="detail">{LOCATION_ADDRESS}</div>
-          <div className="content">
+          <div className="content" style={{ fontSize: "0.8rem" }}>
             작은 예식으로 진행되어
             <br />
             모든 분들을 직접 모시지 못한 점
             <br />
-            너그러운 마음으로 이해해 주시면 감사하겠습니다.
+            너그러운 마음으로 이해해 주시면
+            <br />
+            감사하겠습니다.
           </div>
         </div>
         <Map />

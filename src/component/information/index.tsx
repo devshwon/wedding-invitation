@@ -48,7 +48,7 @@ export const Information2 = () => {
     <>
       <div className="info-card">
         <div className="label">마음 전하기</div>
-        <div className="content">
+        <div className="content" style={{ fontSize: "0.7rem" }}>
           작은 예식으로 진행하게 되어 한 분 한 분 직접 모시지 못한 점
           <br />
           너그러운 마음으로 이해해 주시면 감사하겠습니다.

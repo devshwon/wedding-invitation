@@ -37,16 +37,16 @@ export const NMAP_PLACE_ID = 13321741
 // 예: https://place.map.kakao.com/8634826 -> 8634826
 export const KMAP_PLACE_ID = 8634826
 
-export const BRIDE_FULLNAME = "정지원"
-export const BRIDE_FIRSTNAME = "지원"
-export const BRIDE_TITLE = "장녀"
-export const BRIDE_FATHER = "정상원"
-export const BRIDE_MOTHER = "박윤정"
+export const BRIDE_FULLNAME = "김지안"
+export const BRIDE_FIRSTNAME = "지안"
+export const BRIDE_TITLE = "둘째"
+export const BRIDE_FATHER = ""
+export const BRIDE_MOTHER = ""
 export const BRIDE_INFO = [
   {
     relation: "신부",
     name: BRIDE_FULLNAME,
-    phone: "010-0000-0000",
+    phone: "010-2285-3158",
     account: "우리은행 0000000000000",
   },
   {
@@ -63,16 +63,16 @@ export const BRIDE_INFO = [
   },
 ]
 
-export const GROOM_FULLNAME = "남주호"
-export const GROOM_FIRSTNAME = "주호"
-export const GROOM_TITLE = "차남"
-export const GROOM_FATHER = "남현태"
-export const GROOM_MOTHER = "김현영"
+export const GROOM_FULLNAME = "원성현"
+export const GROOM_FIRSTNAME = "성현"
+export const GROOM_TITLE = "장남"
+export const GROOM_FATHER = "원광세"
+export const GROOM_MOTHER = "김지인"
 export const GROOM_INFO = [
   {
     relation: "신랑",
     name: GROOM_FULLNAME,
-    phone: "010-0000-0000",
+    phone: "010-9246-4450",
     account: "하나은행 00000000000000",
   },
   {

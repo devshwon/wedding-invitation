@@ -16,8 +16,8 @@ export const WEDDING_DATE_FORMAT = `YYYY년 MMMM D일 dddd A h시${WEDDING_DATE.
 // 예: 예식일 8월 -> 8월 15일 광복절
 export const HOLIDAYS = [15]
 
-export const LOCATION = "서울대학교 연구공원 웨딩홀"
-export const LOCATION_ADDRESS = "서울시 관악구 관악로 1, 연구공원 본관 1층"
+export const LOCATION = "본 시그니처 웨딩홀"
+export const LOCATION_ADDRESS = "경기도 수원시 영통구"
 
 // 카카오톡 공유 시 위치 정보로 사용할 주소.
 // LOCATION 과 동일하게 설정해도 무방하나, 필요에 따라 좀 더 상세히 작성 가능.
@@ -40,27 +40,15 @@ export const KMAP_PLACE_ID = 8634826
 export const BRIDE_FULLNAME = "김지안"
 export const BRIDE_FIRSTNAME = "지안"
 export const BRIDE_TITLE = "둘째"
-export const BRIDE_FATHER = ""
-export const BRIDE_MOTHER = ""
+export const BRIDE_FATHER = "故김영권"
+export const BRIDE_MOTHER = "이선희"
 export const BRIDE_INFO = [
   {
     relation: "신부",
     name: BRIDE_FULLNAME,
     phone: "010-2285-3158",
     account: "우리은행 0000000000000",
-  },
-  {
-    relation: "신부 아버지",
-    name: BRIDE_FATHER,
-    phone: "010-0000-0000",
-    account: "하나은행 00000000000",
-  },
-  {
-    relation: "신부 어머니",
-    name: BRIDE_MOTHER,
-    phone: "010-0000-0000",
-    account: "하나은행 00000000000000",
-  },
+  }
 ]
 
 export const GROOM_FULLNAME = "원성현"

@@ -31,9 +31,9 @@ export const Information1 = () => {
       <div className="info-card">
         <div className="label">식사 안내</div>
         <div className="content">
-          식사시간: 12시 30분 ~ 14시 30분
+          식사시간: 15시 ~ 
           <br />
-          장소: 지하 1층 연회장
+          장소: 웨딩이 끝나면 자리에서 바로 진행됩니다.
         </div>
       </div>
     </>

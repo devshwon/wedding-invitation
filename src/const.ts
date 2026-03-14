@@ -17,7 +17,7 @@ export const WEDDING_DATE_FORMAT = `YYYY년 MMMM D일 dddd A h시${WEDDING_DATE.
 export const HOLIDAYS = []
 
 export const LOCATION = "본 시그니처 웨딩홀"
-export const LOCATION_ADDRESS = "경기도 수원시 영통구 반달로 31 4층 404호, 404-1호"
+export const LOCATION_ADDRESS = "경기도 수원시 영통구 반달로 31 4층"
 
 // 카카오톡 공유 시 위치 정보로 사용할 주소.
 // LOCATION 과 동일하게 설정해도 무방하나, 필요에 따라 좀 더 상세히 작성 가능.

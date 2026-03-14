@@ -1,9 +1,28 @@
+import { useEffect, useState } from "react"
 import { BRIDE_INFO, GROOM_INFO } from "../../const"
 import { STATIC_ONLY } from "../../env"
 import { Button } from "../button"
 import { LazyDiv } from "../lazyDiv"
 import { useModal } from "../modal"
 import { AttendanceInfo } from "./attendance"
+
+/** URL에 ?family=mo 있으면 부모 계좌까지 표시, 없으면 신랑/신부 계좌만 */
+function useShowFamilyAccounts() {
+  const [show, setShow] = useState(false)
+  useEffect(() => {
+    setShow(new URLSearchParams(window.location.search).get("family") === "mo")
+  }, [])
+  return show
+}
+
+function filterAccounts(
+  list: Array<{ relation: string; name: string; account: string }>,
+  showFamily: boolean,
+) {
+  return list
+    .filter(({ account }) => !!account)
+    .filter(({ relation }) => showFamily || relation === "신랑" || relation === "신부")
+}
 
 export const Information1 = () => {
   return (
@@ -23,6 +42,7 @@ export const Information1 = () => {
 
 export const Information2 = () => {
   const { openModal, closeModal } = useModal()
+  const showFamily = useShowFamilyAccounts()
 
   return (
     <>
@@ -47,7 +67,7 @@ export const Information2 = () => {
               header: <div className="title">신랑측 계좌번호</div>,
               content: (
                 <>
-                  {GROOM_INFO.filter(({ account }) => !!account).map(
+                  {filterAccounts(GROOM_INFO, showFamily).map(
                     ({ relation, name, account }) => (
                       <div className="account-info" key={relation}>
                         <div>
@@ -100,7 +120,7 @@ export const Information2 = () => {
               header: <div className="title">신부측 계좌번호</div>,
               content: (
                 <>
-                  {BRIDE_INFO.filter(({ account }) => !!account).map(
+                  {filterAccounts(BRIDE_INFO, showFamily).map(
                     ({ relation, name, account }) => (
                       <div className="account-info" key={relation}>
                         <div>

@@ -9,7 +9,7 @@ import "dayjs/locale/ko"
 
 import pkg from "./package.json"
 import { createHtmlPlugin } from "vite-plugin-html"
-import { GROOM_FULLNAME, BRIDE_FULLNAME, LOCATION } from "./src/const"
+import { GROOM_FULLNAME, BRIDE_FULLNAME, LOCATION } from "./src/siteCopy"
 import { WEDDING_DATE_ISO_FA, WEDDING_DATE_ISO_MAIN } from "./src/weddingDates"
 
 dayjs.extend(utc)

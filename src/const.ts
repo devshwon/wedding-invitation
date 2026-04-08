@@ -2,6 +2,11 @@ import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
 import timezone from "dayjs/plugin/timezone"
 import "dayjs/locale/ko"
+import {
+  BRIDE_FULLNAME,
+  GROOM_FULLNAME,
+  LOCATION,
+} from "./siteCopy"
 import { WEDDING_DATE_ISO_FA, WEDDING_DATE_ISO_MAIN } from "./weddingDates"
 
 dayjs.extend(utc)
@@ -25,7 +30,8 @@ export const WEDDING_DATE_FORMAT = `YYYY년 MMMM D일 dddd A h시${WEDDING_DATE.
 // 예: 예식일 8월 -> 8월 15일 광복절
 export const HOLIDAYS = []
 
-export const LOCATION = "본 시그니처 웨딩홀"
+export { BRIDE_FULLNAME, GROOM_FULLNAME, LOCATION }
+
 export const LOCATION_ADDRESS = "경기도 수원시 영통구 반달로 31 4층"
 
 // 카카오톡 공유 시 위치 정보로 사용할 주소.
@@ -46,7 +52,6 @@ export const NMAP_PLACE_ID = 2078067913
 // 예: https://place.map.kakao.com/8634826 -> 8634826
 export const KMAP_PLACE_ID = 720769732
 
-export const BRIDE_FULLNAME = "김지안"
 export const BRIDE_FIRSTNAME = "지안"
 export const BRIDE_TITLE = "차녀"
 export const BRIDE_FATHER = "故김영권"
@@ -65,7 +70,6 @@ export const BRIDE_INFO = [
   }
 ]
 
-export const GROOM_FULLNAME = "원성현"
 export const GROOM_FIRSTNAME = "성현"
 export const GROOM_TITLE = "장남"
 export const GROOM_FATHER = "원광세"

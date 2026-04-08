@@ -3,31 +3,32 @@ import {
   BRIDE_FIRSTNAME,
   GROOM_FIRSTNAME,
   HOLIDAYS,
-  WEDDING_DATE,
   WEDDING_DATE_FORMAT,
 } from "../../const"
+import { useEffectiveWeddingDate } from "../../useEffectiveWeddingDate"
 import { LazyDiv } from "../lazyDiv"
 
-const firstDayOfWeek = WEDDING_DATE.startOf("month").day()
-const daysInMonth = WEDDING_DATE.daysInMonth()
-
 export const Calendar = () => {
-  const [tsDiff, setTsDiff] = useState(WEDDING_DATE.diff())
+  const weddingDate = useEffectiveWeddingDate()
+  const firstDayOfWeek = weddingDate.startOf("month").day()
+  const daysInMonth = weddingDate.daysInMonth()
+
+  const [tsDiff, setTsDiff] = useState(weddingDate.diff())
 
   const dayDiff = useMemo(() => {
-    const dayOffset = WEDDING_DATE.diff(WEDDING_DATE.startOf("day"))
+    const dayOffset = weddingDate.diff(weddingDate.startOf("day"))
     return Math.ceil((tsDiff - dayOffset) / 1000 / 60 / 60 / 24)
-  }, [tsDiff])
+  }, [tsDiff, weddingDate])
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const diff = WEDDING_DATE.diff()
+      const diff = weddingDate.diff()
 
       setTsDiff(diff)
     }, 1000)
 
     return () => clearInterval(interval)
-  })
+  }, [weddingDate])
 
   const diffs = useMemo(() => {
     const tsDiff_ = Math.abs(tsDiff)
@@ -44,7 +45,7 @@ export const Calendar = () => {
     <LazyDiv className="card calendar">
       <h2 className="english">The Wedding Day</h2>
       <div className="break" />
-      {WEDDING_DATE.format(WEDDING_DATE_FORMAT)}
+      {weddingDate.format(WEDDING_DATE_FORMAT)}
       <div className="calendar-wrapper">
         <div className="head holiday">
           <span>Su</span>
@@ -81,7 +82,7 @@ export const Calendar = () => {
             classes.push("holiday")
           }
 
-          const isWeddingDate = date === WEDDING_DATE.date()
+          const isWeddingDate = date === weddingDate.date()
 
           if (isWeddingDate) {
             classes.push("wedding-date")

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useMemo } from "react"
 import { BRIDE_INFO, GROOM_INFO } from "../../const"
 import { STATIC_ONLY } from "../../env"
 import { Button } from "../button"
@@ -6,13 +6,19 @@ import { LazyDiv } from "../lazyDiv"
 import { useModal } from "../modal"
 import { AttendanceInfo } from "./attendance"
 
-/** URL에 ?family=mo 있으면 부모 계좌까지 표시, 없으면 신랑/신부 계좌만 */
-function useShowFamilyAccounts() {
-  const [show, setShow] = useState(false)
-  useEffect(() => {
-    setShow(new URLSearchParams(window.location.search).get("family") === "mo")
+/**
+ * URL `family=mo` → 부모 계좌까지 표시.
+ * `family=fa` → 신랑·신부 본인 계좌만(신랑 어머니 등 부모 계좌 숨김). 조합·다른 기능용으로 fa 값도 읽어 둠.
+ */
+function useFamilyQuery() {
+  return useMemo(() => {
+    if (typeof window === "undefined") return { mo: false, fa: false }
+    const v = new URLSearchParams(window.location.search).get("family")
+    return {
+      mo: v === "mo",
+      fa: v === "fa",
+    }
   }, [])
-  return show
 }
 
 function filterAccounts(
@@ -42,7 +48,9 @@ export const Information1 = () => {
 
 export const Information2 = () => {
   const { openModal, closeModal } = useModal()
-  const showFamily = useShowFamilyAccounts()
+  const { mo: familyMo } = useFamilyQuery()
+  /** fa일 땐 본인 계좌만 — 부모 확장은 mo 전용 */
+  const showFamily = familyMo
 
   return (
     <>

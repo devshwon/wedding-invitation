@@ -10,6 +10,8 @@ dayjs.locale("ko")
 export { dayjs }
 
 export const WEDDING_DATE = dayjs.tz("2026-04-11 14:30", "Asia/Seoul")
+/** URL에 ?for=fa 일 때 화면에 쓰는 예식일 */
+export const WEDDING_DATE_FOR_FA = dayjs.tz("2026-04-18 14:30", "Asia/Seoul")
 export const WEDDING_DATE_FORMAT = `YYYY년 MMMM D일 dddd A h시${WEDDING_DATE.minute() === 0 ? "" : " m분"}`
 
 // 예식 당월 휴무일. 켈린더에 표시하기 위함.s
@@ -69,9 +71,13 @@ export const GROOM_INFO = [
     account: "토스뱅크 1000-1580-2726",
   },
   {
+    relation: "신랑 아버지",
+    name: GROOM_FATHER,
+    phone: "010-6223-3157",
+  },
+  {
     relation: "신랑 어머니",
     name: GROOM_MOTHER,
     phone: "010-7426-2999",
-    account: "토스뱅크 1000-1954-9897"
-  },
+  }
 ]

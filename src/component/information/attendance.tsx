@@ -3,9 +3,9 @@ import {
   dayjs,
   GROOM_FULLNAME,
   LOCATION,
-  WEDDING_DATE,
   WEDDING_DATE_FORMAT,
 } from "../../const"
+import { useEffectiveWeddingDate } from "../../useEffectiveWeddingDate"
 import { Button } from "../button"
 import { useModal } from "../modal"
 import { useEffect, useRef, useState } from "react"
@@ -26,6 +26,7 @@ const RULES = {
 
 export const AttendanceInfo = () => {
   const { openModal, closeModal } = useModal()
+  const weddingDate = useEffectiveWeddingDate()
 
   const initialized = useRef(false)
 
@@ -35,7 +36,7 @@ export const AttendanceInfo = () => {
     if (initialized.current) return
     initialized.current = true
 
-    if (!SERVER_URL || WEDDING_DATE.isBefore(now.current)) return
+    if (!SERVER_URL || weddingDate.isBefore(now.current)) return
 
     openModal({
       className: "attendance-info-modal",
@@ -56,7 +57,7 @@ export const AttendanceInfo = () => {
           <div className="wedding-info">
             <HeartIcon /> 신랑 {GROOM_FULLNAME} & 신부 {BRIDE_FULLNAME}
             <br />
-            <CalendarIcon /> {WEDDING_DATE.format(WEDDING_DATE_FORMAT)}
+            <CalendarIcon /> {weddingDate.format(WEDDING_DATE_FORMAT)}
             <br />
             <MarkerIcon /> {LOCATION}
           </div>
@@ -83,9 +84,9 @@ export const AttendanceInfo = () => {
         </>
       ),
     })
-  }, [openModal, closeModal])
+  }, [openModal, closeModal, weddingDate])
 
-  if (!SERVER_URL || WEDDING_DATE.isBefore(now.current)) return null
+  if (!SERVER_URL || weddingDate.isBefore(now.current)) return null
 
   return (
     <div className="info-card">

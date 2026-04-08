@@ -2,26 +2,41 @@ import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
 import svgr from "vite-plugin-svgr"
 import fs from "fs"
+import dayjs from "dayjs"
+import utc from "dayjs/plugin/utc"
+import timezone from "dayjs/plugin/timezone"
+import "dayjs/locale/ko"
 
 import pkg from "./package.json"
 import { createHtmlPlugin } from "vite-plugin-html"
-import {
-  GROOM_FULLNAME,
-  BRIDE_FULLNAME,
-  WEDDING_DATE,
-  LOCATION,
-  WEDDING_DATE_FORMAT,
-} from "./src/const"
+import { GROOM_FULLNAME, BRIDE_FULLNAME, LOCATION } from "./src/const"
+import { WEDDING_DATE_ISO_FA, WEDDING_DATE_ISO_MAIN } from "./src/weddingDates"
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
+dayjs.locale("ko")
 
 const distFolder = "build"
 
-let base = "/"
+const htmlWeddingDate = dayjs.tz(
+  process.env.VITE_WEDDING_DATE_VARIANT === "fa"
+    ? WEDDING_DATE_ISO_FA
+    : WEDDING_DATE_ISO_MAIN,
+  "Asia/Seoul",
+)
+const htmlWeddingFormat = `YYYY년 MMMM D일 dddd A h시${htmlWeddingDate.minute() === 0 ? "" : " m분"}`
 
-try {
-  const url = new URL(pkg.homepage)
-  base = url.pathname
-} catch (e) {
-  base = pkg.homepage || "/"
+let base = "/"
+if (process.env.VITE_BASE_PATH?.trim()) {
+  const p = process.env.VITE_BASE_PATH.trim()
+  base = p.endsWith("/") ? p : `${p}/`
+} else {
+  try {
+    const path = new URL(pkg.homepage).pathname
+    base = path.endsWith("/") ? path : `${path}/`
+  } catch {
+    base = typeof pkg.homepage === "string" ? pkg.homepage : "/"
+  }
 }
 
 // https://vite.dev/config/
@@ -34,7 +49,7 @@ export default defineConfig({
         data: {
           GROOM_FULLNAME,
           BRIDE_FULLNAME,
-          DESCRIPTION: `${WEDDING_DATE.format(WEDDING_DATE_FORMAT)} ${LOCATION}`,
+          DESCRIPTION: `${htmlWeddingDate.format(htmlWeddingFormat)} ${LOCATION}`,
         },
       },
     }),

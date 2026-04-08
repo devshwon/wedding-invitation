@@ -6,14 +6,18 @@ import {
 } from "./const"
 
 /**
- * ?for=fa 인 링크를 연 브라우저에서 og:description 등을 맞는 예식일로 맞춤.
- * 카카오·메타 등 크롤러가 JS 없이 HTML만 가져오면 초기(빌드) 문구만 보일 수 있음.
+ * 18일 전용(/fa/) 빌드는 HTML에 이미 맞는 날짜가 박혀 있음.
+ * 11일 기본 빌드에서만 `?for=fa`로 og:description 등을 클라이언트에서 덮어씀.
  */
 function applyPreviewMetaFromUrl() {
   if (typeof document === "undefined") return
 
-  const forFa = new URLSearchParams(window.location.search).get("for") === "fa"
-  const date = forFa ? WEDDING_DATE_FOR_FA : WEDDING_DATE
+  let date = WEDDING_DATE
+  if (import.meta.env.VITE_WEDDING_DATE_VARIANT !== "fa") {
+    if (new URLSearchParams(window.location.search).get("for") === "fa") {
+      date = WEDDING_DATE_FOR_FA
+    }
+  }
   const description = `${date.format(WEDDING_DATE_FORMAT)} ${LOCATION}`
 
   const ogDesc = document.querySelector('meta[property="og:description"]')

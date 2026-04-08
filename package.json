@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:fa": "VITE_WEDDING_DATE_VARIANT=fa VITE_BASE_PATH=/wedding-invitation/fa/ vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },

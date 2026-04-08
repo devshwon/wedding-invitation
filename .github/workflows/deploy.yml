@@ -1,5 +1,7 @@
 name: Deploy
 
+# 11일: package.json homepage (예: /wedding-invitation/)
+# 18일: 같은 Pages 사이트 아래 /wedding-invitation/fa/ (homepage 경로 + fa/)
 on:
   push:
     branches: ["main"]
@@ -42,8 +44,26 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build
+      - name: Vite base path for /fa/ subsite
+        id: fa_base
+        run: |
+          FA_BASE=$(node -e "const h=require('./package.json').homepage; const p=new URL(h).pathname.replace(/\/$/,''); console.log(p+'/fa/')")
+          echo "path=$FA_BASE" >> $GITHUB_OUTPUT
+
+      - name: Build main site (4/11)
         run: npm run build
+
+      - name: Stage main site
+        run: mkdir -p deploy && cp -r build/* deploy/
+
+      - name: Build fa subsite (4/18)
+        run: npm run build
+        env:
+          VITE_WEDDING_DATE_VARIANT: fa
+          VITE_BASE_PATH: ${{ steps.fa_base.outputs.path }}
+
+      - name: Stage fa subsite
+        run: mkdir -p deploy/fa && cp -r build/* deploy/fa/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -51,7 +71,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "./build"
+          path: "./deploy"
 
       - name: Deploy to GitHub Pages
         id: deployment

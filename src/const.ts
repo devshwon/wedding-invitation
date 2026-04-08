@@ -2,6 +2,7 @@ import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
 import timezone from "dayjs/plugin/timezone"
 import "dayjs/locale/ko"
+import { WEDDING_DATE_ISO_FA, WEDDING_DATE_ISO_MAIN } from "./weddingDates"
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -9,9 +10,15 @@ dayjs.locale("ko")
 
 export { dayjs }
 
-export const WEDDING_DATE = dayjs.tz("2026-04-11 14:30", "Asia/Seoul")
-/** URL에 ?for=fa 일 때 화면에 쓰는 예식일 */
-export const WEDDING_DATE_FOR_FA = dayjs.tz("2026-04-18 14:30", "Asia/Seoul")
+const isFaSiteBuild = import.meta.env.VITE_WEDDING_DATE_VARIANT === "fa"
+
+/** 기본(11일) 청첩장 빌드의 예식일. `VITE_WEDDING_DATE_VARIANT=fa` 빌드에서는 18일로 고정 */
+export const WEDDING_DATE = dayjs.tz(
+  isFaSiteBuild ? WEDDING_DATE_ISO_FA : WEDDING_DATE_ISO_MAIN,
+  "Asia/Seoul",
+)
+/** 기본 사이트에서만 URL `?for=fa` 로 18일 표시할 때 사용 */
+export const WEDDING_DATE_FOR_FA = dayjs.tz(WEDDING_DATE_ISO_FA, "Asia/Seoul")
 export const WEDDING_DATE_FORMAT = `YYYY년 MMMM D일 dddd A h시${WEDDING_DATE.minute() === 0 ? "" : " m분"}`
 
 // 예식 당월 휴무일. 켈린더에 표시하기 위함.s
@@ -79,5 +86,6 @@ export const GROOM_INFO = [
     relation: "신랑 어머니",
     name: GROOM_MOTHER,
     phone: "010-7426-2999",
+    account: "토스뱅크 1000-1954-9897"
   }
 ]

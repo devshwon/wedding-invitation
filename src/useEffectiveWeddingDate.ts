@@ -1,12 +1,14 @@
 import { useMemo } from "react"
 import { WEDDING_DATE, WEDDING_DATE_FOR_FA } from "./const"
 
-/** URL에 ?for=fa 이면 4/18, 아니면 기본 예식일 */
+/** `/fa/` 18일 전용 빌드면 항상 WEDDING_DATE(18일). 기본 사이트는 `?for=fa`일 때만 18일 */
 export function useEffectiveWeddingDate() {
   return useMemo(() => {
+    if (import.meta.env.VITE_WEDDING_DATE_VARIANT === "fa") return WEDDING_DATE
     if (typeof window === "undefined") return WEDDING_DATE
-    return new URLSearchParams(window.location.search).get("for") === "fa"
-      ? WEDDING_DATE_FOR_FA
-      : WEDDING_DATE
+    if (new URLSearchParams(window.location.search).get("for") === "fa") {
+      return WEDDING_DATE_FOR_FA
+    }
+    return WEDDING_DATE
   }, [])
 }
